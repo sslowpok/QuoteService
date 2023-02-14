@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  url: http://localhost:${server.port}
+  basePrefixUrl: /api/v1/kameleoon
+
+spring:
+  application:
+    name: kameleoon
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:./data/sampledata
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: ${server.basePrefixUrl}/v1/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    path: ${server.basePrefixUrl}/swagger-ui.html
+
