@@ -1,5 +1,6 @@
 package cameleoon.trial.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.v3.oas.annotations.Hidden;
 import lombok.*;
 
@@ -33,7 +34,8 @@ public class UserEntity {
 	private LocalDateTime dateOfCreation;
 
 	@Column
-	@OneToMany(orphanRemoval = true, mappedBy = "id", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	@OneToMany(orphanRemoval = true, mappedBy = "userEntity", fetch = FetchType.LAZY)
 	private List<QuoteEntity> quoteEntities;
 
 }

@@ -1,5 +1,6 @@
 package cameleoon.trial.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class QuoteEntity {
 	private LocalDateTime timestamp;
 
 	@ManyToOne(optional = false)
+	@JsonBackReference
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private UserEntity userEntity;
 

@@ -44,7 +44,6 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	@Override
-	@Transactional
 	public QuoteResponseDto addQuote(QuoteRequestDto request) {
 		UserEntity author = findUserById(request.getUserId());
 		QuoteEntity quoteEntity = quoteRepository.save(createQuote(request, author));
