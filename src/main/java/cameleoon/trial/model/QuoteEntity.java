@@ -16,7 +16,15 @@ public class QuoteEntity {
 
 	@Id
 	@Column
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@SequenceGenerator(
+			name = "quote_sequence",
+			sequenceName = "quote_sequence",
+			allocationSize = 1
+	)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "quote_sequence"
+	)
 	private Long id;
 
 	@Column
