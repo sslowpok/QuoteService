@@ -1,14 +1,16 @@
 package cameleoon.trial.api.dto;
 
+import cameleoon.trial.model.QuoteEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
-public class UserRequestDto {
+public class UserResponseDto {
 
 	@Schema(description = "User id", example = "1")
 	private Long id;
@@ -24,5 +26,8 @@ public class UserRequestDto {
 
 	@Schema(description = "Date of creation")
 	private LocalDateTime dateOfCreation;
+
+	@Schema(description = "User's quotes")
+	private List<QuoteEntity> quoteEntities;
 
 }

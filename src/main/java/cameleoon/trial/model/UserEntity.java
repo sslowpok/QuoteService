@@ -1,17 +1,18 @@
 package cameleoon.trial.model;
 
 import io.swagger.v3.oas.annotations.Hidden;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Setter
-@Getter
+@Data
+@Builder
 @Entity
 @Table(name = "user_entity")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
 	@Id
@@ -29,10 +30,10 @@ public class UserEntity {
 
 	@Column
 	@Hidden
-	private LocalDateTime timestamp;
+	private LocalDateTime dateOfCreation;
 
 	@Column
-	@OneToMany(orphanRemoval = true, mappedBy = "content", fetch = FetchType.LAZY)
+	@OneToMany(orphanRemoval = true, mappedBy = "id", fetch = FetchType.LAZY)
 	private List<QuoteEntity> quoteEntities;
 
 }

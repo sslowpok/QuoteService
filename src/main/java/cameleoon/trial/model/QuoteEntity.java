@@ -1,8 +1,6 @@
 package cameleoon.trial.model;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +9,8 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "quote")
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class QuoteEntity {
 
 	@Id

@@ -1,28 +1,45 @@
 package cameleoon.trial.service;
 
-import cameleoon.trial.api.dto.StatusResponseDto;
+import cameleoon.trial.api.dto.UserRequestDto;
+import cameleoon.trial.api.dto.UserResponseDto;
+import cameleoon.trial.api.dto.mapper.UserDtoMapper;
 import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-	@Autowired
-	private UserRepository userRepository;
+	private final UserRepository userRepository;
+
+	private final UserDtoMapper userDtoMapper;
 
 	public List<UserEntity> getUsers() {
 		return userRepository.findAll();
 	}
 
 
-	public StatusResponseDto addOrUpdateUser(UserEntity userEntity) {
-		userEntity.setTimestamp(LocalDateTime.now());
+	public UserResponseDto addUser(UserRequestDto request) {
 
-		return null;
+		// todo: fix//
+//		userRepository.save(userEntity);
+		return userDtoMapper.entityToResponse(userRepository.save(createUser(request)));
 	}
+
+	private UserEntity createUser(UserRequestDto request) {
+		return UserEntity.builder()
+				.name(request.getName())
+				.email(request.getEmail())
+				.password(request.getPassword())
+				.dateOfCreation(LocalDateTime.now())
+				.build();
+	}
+
+
+
 }

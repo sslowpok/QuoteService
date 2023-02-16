@@ -13,7 +13,7 @@ public class QuoteResponseDto {
 	@Schema(description = "Quote id", example = "1")
 	private Long id;
 
-	@Schema(description = "Quote content", example = "I still want to believe")
+	@Schema(description = "Quote content", example = "I want to believe")
 	private String content;
 
 	@Schema(description = "Date of creation/update")

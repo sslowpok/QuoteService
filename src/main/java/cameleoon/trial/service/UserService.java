@@ -1,11 +1,12 @@
 package cameleoon.trial.service;
 
-import cameleoon.trial.api.dto.StatusResponseDto;
+import cameleoon.trial.api.dto.UserRequestDto;
+import cameleoon.trial.api.dto.UserResponseDto;
 import cameleoon.trial.model.UserEntity;
 
 import java.util.List;
 
 public interface UserService {
 	List<UserEntity> getUsers();
-	StatusResponseDto addOrUpdateUser(UserEntity userEntity);
+	UserResponseDto addUser(UserRequestDto userRequestDto);
 }

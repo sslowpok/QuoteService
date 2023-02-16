@@ -1,5 +1,6 @@
 package cameleoon.trial.api.dto.mapper;
 
+import cameleoon.trial.api.dto.QuoteRequestDto;
 import cameleoon.trial.api.dto.QuoteResponseDto;
 import cameleoon.trial.model.QuoteEntity;
 import lombok.RequiredArgsConstructor;
@@ -7,9 +8,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class QuoteResponseDtoMapper {
+public class QuoteDtoMapper {
 
-	public QuoteResponseDto map(QuoteEntity quoteEntity) {
+	public QuoteEntity requestToEntity(QuoteRequestDto request) {
+		return QuoteEntity.builder()
+				.id(request.getId())
+				.content(request.getContent())
+				.build();
+	}
+
+	public QuoteResponseDto entityToResponse(QuoteEntity quoteEntity) {
 		return QuoteResponseDto.builder()
 				.id(quoteEntity.getId())
 				.content(quoteEntity.getContent())

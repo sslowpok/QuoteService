@@ -8,12 +8,13 @@ import java.util.List;
 
 public interface QuoteService {
 
-	QuoteResponseDto addOrUpdateQuote(QuoteRequestDto request);
-
-	List<QuoteEntity> getQuotes();
+	List<QuoteResponseDto> getQuotes();
 
 	QuoteEntity getQuoteById(Long id);
 
 	void deleteQuote(Long id);
 
+	QuoteResponseDto addQuote(QuoteRequestDto request);
+
+	QuoteResponseDto updateQuote(QuoteRequestDto request);
 }

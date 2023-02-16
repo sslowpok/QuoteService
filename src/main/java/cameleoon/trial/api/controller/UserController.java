@@ -1,19 +1,20 @@
 package cameleoon.trial.api.controller;
 
-import cameleoon.trial.api.dto.StatusResponseDto;
+import cameleoon.trial.api.dto.UserRequestDto;
+import cameleoon.trial.api.dto.UserResponseDto;
 import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.service.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
-	@Autowired
-	private UserServiceImpl userService;
+	private final UserServiceImpl userService;
 
 	@GetMapping
 	public List<UserEntity> getUsersList() {
@@ -21,8 +22,8 @@ public class UserController {
 	}
 
 	@PostMapping
-	public StatusResponseDto addUser(@RequestBody UserEntity userEntity) {
-		return userService.addOrUpdateUser(userEntity);
+	public UserResponseDto addUser(@RequestBody UserRequestDto userRequestDto) {
+		return userService.addUser(userRequestDto);
 	}
 
 }

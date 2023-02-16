@@ -8,14 +8,13 @@ import lombok.Data;
 @Builder
 public class QuoteRequestDto {
 
-	@Schema(description = "Quote id")
+	@Schema(description = "Quote id", example = "1")
 	private Long id;
 
-	@Schema(name = "Quote content", example = "I want to believe")
+	@Schema(description = "Sample quote content", example = "I want to believe")
 	private	String content;
 
 	@Schema(description = "Id of the author")
 	private Long userId;
-
 
 }

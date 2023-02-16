@@ -2,17 +2,19 @@ package cameleoon.trial.service;
 
 import cameleoon.trial.api.dto.QuoteRequestDto;
 import cameleoon.trial.api.dto.QuoteResponseDto;
-import cameleoon.trial.api.dto.mapper.QuoteResponseDtoMapper;
+import cameleoon.trial.api.dto.mapper.QuoteDtoMapper;
 import cameleoon.trial.exception.QuoteNotFoundException;
 import cameleoon.trial.exception.UserNotFoundException;
 import cameleoon.trial.model.QuoteEntity;
 import cameleoon.trial.model.UserEntity;
-import cameleoon.trial.model.mapper.QuoteEntityMapper;
 import cameleoon.trial.repository.QuoteRepository;
 import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,14 +26,15 @@ public class QuoteServiceImpl implements QuoteService {
 
 	private final UserRepository userRepository;
 
-	private final QuoteEntityMapper quoteEntityMapper;
-
-	private final QuoteResponseDtoMapper quoteResponseDtoMapper;
+	private final QuoteDtoMapper quoteDtoMapper;
 
 
 	@Override
-	public List<QuoteEntity> getQuotes() {
-		return quoteRepository.findAll();
+	public List<QuoteResponseDto> getQuotes() {
+		List<QuoteResponseDto> res = new ArrayList<>();
+		quoteRepository.findAll()
+				.forEach(x -> res.add(quoteDtoMapper.entityToResponse(x)));
+		return res;
 	}
 
 	@Override
@@ -41,25 +44,39 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	@Override
-	public QuoteResponseDto addOrUpdateQuote(QuoteRequestDto request) {
-		UserEntity userEntity = userRepository.findById(request.getUserId())
-				.orElseThrow(() -> new UserNotFoundException(String.format("User with id %s not found", request.getUserId())));
-		QuoteEntity quoteEntity = request.getId() == null ?
-				createQuote(request, userEntity) : updateQuote(request, userEntity);
-		return quoteResponseDtoMapper.map(quoteRepository.save(quoteEntity));
+	@Transactional
+	public QuoteResponseDto addQuote(QuoteRequestDto request) {
+		UserEntity author = findUserById(request.getUserId());
+		QuoteEntity quoteEntity = quoteRepository.save(createQuote(request, author));
+		author.getQuoteEntities().add(quoteEntity);
+
+		return quoteDtoMapper.entityToResponse(quoteEntity);
+//		return quoteDtoMapper.entityToResponse(quoteRepository.save(createQuote(request, author)));
 	}
 
-	private QuoteEntity createQuote(QuoteRequestDto request, UserEntity user) {
-		return quoteEntityMapper.map(request, user);
+
+	private QuoteEntity createQuote(QuoteRequestDto request, UserEntity author) {
+		return QuoteEntity.builder()
+				.content(request.getContent())
+				.userEntity(author)
+				.timestamp(LocalDateTime.now())
+				.build();
 	}
 
-	private QuoteEntity updateQuote(QuoteRequestDto request, UserEntity userEntity) {
-		QuoteEntity quoteEntity = getQuoteById(request.getId());
-		quoteEntity.setContent(request.getContent());
-		quoteEntity.setUserEntity(userEntity);
-		return quoteEntity;
+	private UserEntity findUserById(Long userid) {
+		return userRepository.findById(userid)
+				.orElseThrow(() -> new UserNotFoundException(
+						String.format("User with id %s not found", userid)
+				));
 	}
 
+	@Override
+	public QuoteResponseDto updateQuote(QuoteRequestDto request) {
+		QuoteEntity entity = quoteDtoMapper.requestToEntity(request);
+		entity.setUserEntity(findUserById(request.getUserId()));
+		entity.setTimestamp(LocalDateTime.now());
+		return quoteDtoMapper.entityToResponse(quoteRepository.save(entity));
+	}
 
 	// todo: by id or content? parameter???
 	@Override
