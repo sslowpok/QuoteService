@@ -28,7 +28,6 @@ public class QuoteServiceImpl implements QuoteService {
 
 	private final QuoteDtoMapper quoteDtoMapper;
 
-
 	@Override
 	public List<QuoteResponseDto> getQuotes() {
 		List<QuoteResponseDto> res = new ArrayList<>();
@@ -45,19 +44,14 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public QuoteResponseDto addQuote(QuoteRequestDto request) {
-		UserEntity author = findUserById(request.getUserId());
-		QuoteEntity quoteEntity = quoteRepository.save(createQuote(request, author));
-		author.getQuoteEntities().add(quoteEntity);
-
-		return quoteDtoMapper.entityToResponse(quoteEntity);
-//		return quoteDtoMapper.entityToResponse(quoteRepository.save(createQuote(request, author)));
+		return quoteDtoMapper.entityToResponse(quoteRepository.save(createQuote(request)));
 	}
 
-
-	private QuoteEntity createQuote(QuoteRequestDto request, UserEntity author) {
+	private QuoteEntity createQuote(QuoteRequestDto request) {
 		return QuoteEntity.builder()
+				.id(request.getId())
 				.content(request.getContent())
-				.userEntity(author)
+				.userEntity(findUserById(request.getUserId()))
 				.timestamp(LocalDateTime.now())
 				.build();
 	}

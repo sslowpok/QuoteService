@@ -7,8 +7,5 @@ import java.util.Optional;
 
 public interface QuoteRepository extends JpaRepository<QuoteEntity, Long> {
 
-	boolean existsByContent(String content);
-
-	QuoteEntity findByContent(String content);
 
 }
