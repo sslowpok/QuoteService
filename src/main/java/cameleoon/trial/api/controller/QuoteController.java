@@ -5,6 +5,7 @@ import cameleoon.trial.api.dto.QuoteResponseDto;
 import cameleoon.trial.api.dto.StatusResponseDto;
 import cameleoon.trial.model.QuoteEntity;
 import cameleoon.trial.service.QuoteService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,46 +21,49 @@ public class QuoteController {
 	private final QuoteService quoteService;
 
 	@GetMapping
-	@Schema(description = "Get list of votes")
+	@Operation(summary = "Get list of quotes")
 	public List<QuoteResponseDto> getQuotes() {
 		return quoteService.getQuotes();
 	}
 
 	@PostMapping
-	@Schema(description = "Add new quote")
+	@Operation(summary = "Add new quote")
 	public QuoteResponseDto addQuote(@RequestBody QuoteRequestDto request) {
 		return quoteService.addQuote(request);
 	}
 
 	@PutMapping
-	@Schema(description = "Update vote")
+	@Operation(summary = "Update quote")
 	public QuoteResponseDto updateQuote(@RequestBody QuoteRequestDto request) {
 		return quoteService.updateQuote(request);
 	}
 
 	@GetMapping("/random")
-	@Schema(description = "Get a random quote")
+	@Operation(summary = "Get a random quote")
 	public QuoteResponseDto getRandomQuote() {
 		return quoteService.getRandomQuote();
 	}
 
 	@GetMapping("/{id}")
-	@Schema(description = "Get quote by id")
+	@Operation(summary = "Get quote by id")
 	public QuoteResponseDto getQuoteById(@PathVariable Long id) {
 		return quoteService.getQuoteById(id);
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Delete quote by id")
 	public StatusResponseDto deleteQuoteById(@PathVariable Long id) {
 		return quoteService.deleteQuote(id);
 	}
 
 	@GetMapping("/top")
+	@Operation(summary = "Get top 10 quotes")
 	public List<QuoteResponseDto> getTopQuotes() {
 		return quoteService.getTopQuotes();
 	}
 
 	@GetMapping("/last")
+	@Operation(summary = "Get 10 least scorded quotes")
 	public List<QuoteResponseDto> getLastQuotes() {
 		return quoteService.getLastQuotes();
 	}
