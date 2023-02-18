@@ -3,8 +3,6 @@ package cameleoon.trial.service;
 import cameleoon.trial.api.dto.QuoteRequestDto;
 import cameleoon.trial.api.dto.QuoteResponseDto;
 import cameleoon.trial.api.dto.StatusResponseDto;
-import cameleoon.trial.model.QuoteEntity;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

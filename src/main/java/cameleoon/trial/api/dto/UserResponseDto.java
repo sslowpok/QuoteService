@@ -1,12 +1,10 @@
 package cameleoon.trial.api.dto;
 
-import cameleoon.trial.model.QuoteEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @Builder

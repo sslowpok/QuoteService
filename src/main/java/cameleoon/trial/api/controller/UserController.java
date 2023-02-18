@@ -3,10 +3,8 @@ package cameleoon.trial.api.controller;
 import cameleoon.trial.api.dto.UserDetailsResponseDto;
 import cameleoon.trial.api.dto.UserRequestDto;
 import cameleoon.trial.api.dto.UserResponseDto;
-import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

@@ -4,7 +4,6 @@ import cameleoon.trial.api.dto.VoteRequestDto;
 import cameleoon.trial.api.dto.VoteResponseDto;
 import cameleoon.trial.service.VoteService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
