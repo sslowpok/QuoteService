@@ -20,4 +20,9 @@ public interface QuoteService {
 	QuoteResponseDto updateQuote(QuoteRequestDto request);
 
     QuoteResponseDto getRandomQuote();
+
+	List<QuoteResponseDto> getTopQuotes();
+
+	List<QuoteResponseDto> getLastQuotes();
+
 }

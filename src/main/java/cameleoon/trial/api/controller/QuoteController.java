@@ -47,4 +47,14 @@ public class QuoteController {
 		return quoteService.deleteQuote(id);
 	}
 
+	@GetMapping("/top")
+	public List<QuoteResponseDto> getTopQuotes() {
+		return quoteService.getTopQuotes();
+	}
+
+	@GetMapping("/last")
+	public List<QuoteResponseDto> getLastQuotes() {
+		return quoteService.getLastQuotes();
+	}
+
 }

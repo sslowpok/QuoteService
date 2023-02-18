@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -91,5 +92,23 @@ public class QuoteServiceImpl implements QuoteService {
 		}
 		quoteRepository.deleteById(id);
 		return ResponseEntity.ok("Quote deleted");
+	}
+
+	@Override
+	public List<QuoteResponseDto> getTopQuotes() {
+		List<QuoteEntity> list = quoteRepository.findByOrderByScoreDesc().stream()
+				.limit(10).toList();
+		List<QuoteResponseDto> res = new ArrayList<>();
+		list.forEach(x -> res.add(quoteDtoMapper.entityToResponse(x)));
+		return res;
+	}
+
+	@Override
+	public List<QuoteResponseDto> getLastQuotes() {
+		List<QuoteEntity> list = quoteRepository.findByOrderByScoreDesc().stream()
+				.limit(10).toList();
+		List<QuoteResponseDto> res = new ArrayList<>();
+		list.forEach(x -> res.add(quoteDtoMapper.entityToResponse(x)));
+		return res;
 	}
 }
