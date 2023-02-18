@@ -8,7 +8,7 @@ import cameleoon.trial.model.UserEntity;
 import java.util.List;
 
 public interface UserService {
-	List<UserEntity> getUsers();
+	List<UserResponseDto> getUsers();
 
 	UserDetailsResponseDto getUserById(Long id);
 	UserResponseDto addUser(UserRequestDto userRequestDto);

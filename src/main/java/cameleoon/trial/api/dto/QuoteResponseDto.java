@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Builder
 public class QuoteResponseDto {
 
-	@Schema(description = "Quote id", example = "1")
+	@Schema(description = "Quote id")
 	private Long id;
 
-	@Schema(description = "Quote content", example = "I want to believe")
+	@Schema(description = "Quote content")
 	private String content;
 
 	@Schema(description = "Date of creation/update")

@@ -12,16 +12,16 @@ import java.util.List;
 @Builder
 public class UserResponseDto {
 
-	@Schema(description = "User id", example = "1")
+	@Schema(description = "User id")
 	private Long id;
 
-	@Schema(description = "User name", example = "Tom")
+	@Schema(description = "User name")
 	private String name;
 
-	@Schema(description = "User email", example = "tom@gmail.com")
+	@Schema(description = "User email")
 	private String email;
 
-	@Schema(description = "Date of creation")
+	@Schema(description = "Date of user creation / update")
 	private LocalDateTime dateOfCreation;
 
 }

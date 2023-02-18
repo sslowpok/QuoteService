@@ -22,7 +22,8 @@ public class VoteEntity {
     @Column
     @SequenceGenerator(
             name = "vote_sequence",
-            sequenceName = "vote_sequence"
+            sequenceName = "vote_sequence",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,

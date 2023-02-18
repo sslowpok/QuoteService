@@ -2,6 +2,7 @@ package cameleoon.trial.service;
 
 import cameleoon.trial.api.dto.QuoteRequestDto;
 import cameleoon.trial.api.dto.QuoteResponseDto;
+import cameleoon.trial.api.dto.StatusResponseDto;
 import cameleoon.trial.api.dto.mapper.QuoteDtoMapper;
 import cameleoon.trial.exception.QuoteNotFoundException;
 import cameleoon.trial.exception.UserNotFoundException;
@@ -84,14 +85,16 @@ public class QuoteServiceImpl implements QuoteService {
 		return random.nextLong(max - min + 1) + min;
 	}
 
-	// todo: fix response entity
 	@Override
-	public ResponseEntity<?> deleteQuote(Long id) {
+	public StatusResponseDto deleteQuote(Long id) {
 		if (!quoteRepository.existsById(id)) {
 			throw new QuoteNotFoundException(String.format("Quote with id %s not found", id));
 		}
 		quoteRepository.deleteById(id);
-		return ResponseEntity.ok("Quote deleted");
+		return StatusResponseDto.builder()
+				.code(200)
+				.desc("Entity deleted successfully")
+				.build();
 	}
 
 	@Override

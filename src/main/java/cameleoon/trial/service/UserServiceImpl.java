@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,8 +22,10 @@ public class UserServiceImpl implements UserService {
 
 	private final UserDtoMapper userDtoMapper;
 
-	public List<UserEntity> getUsers() {
-		return userRepository.findAll();
+	public List<UserResponseDto> getUsers() {
+		List<UserResponseDto> res = new ArrayList<>();
+		userRepository.findAll().forEach(x -> res.add(userDtoMapper.entityToResponse(x)));
+		return res;
 	}
 
 

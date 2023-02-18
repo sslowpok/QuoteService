@@ -16,10 +16,20 @@ spring:
     password:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
+#        default_schema: kameleoon
+    show-sql: true
+  liquibase:
+    enabled: true
+#    default-schema: ${spring.jpa.properties.hibernate.default_schema}
+    change-log: classpath:db/changelog.xml
+    user: sa
+    password:
 
 springdoc:
   api-docs:

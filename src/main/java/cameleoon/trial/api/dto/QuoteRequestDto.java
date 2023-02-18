@@ -14,7 +14,7 @@ public class QuoteRequestDto {
 	@Schema(description = "Sample quote content", example = "I want to believe")
 	private	String content;
 
-	@Schema(description = "Id of the author")
+	@Schema(description = "Id of the author", example = "1")
 	private Long userId;
 
 }

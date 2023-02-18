@@ -43,13 +43,13 @@ public class UserEntity {
 
 	@Column
 	@JsonManagedReference
-	@OneToMany(orphanRemoval = true, mappedBy = "userEntity", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
 	private List<QuoteEntity> quoteEntities;
 
 
 	@Column
 	@JsonManagedReference
-	@OneToMany(orphanRemoval = true, mappedBy = "userEntity", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "userEntity", fetch = FetchType.LAZY)
 	private List<VoteEntity> voteEntities;
 
 }

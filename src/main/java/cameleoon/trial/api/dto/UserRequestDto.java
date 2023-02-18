@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 @Builder
 public class UserRequestDto {
 
-	@Schema(description = "User id", example = "1")
-	private Long id;
-
 	@Schema(description = "User name", example = "Tom")
 	private String name;
 
