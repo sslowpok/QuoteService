@@ -10,11 +10,13 @@ public interface QuoteService {
 
 	List<QuoteResponseDto> getQuotes();
 
-	QuoteEntity getQuoteById(Long id);
+	QuoteResponseDto getQuoteById(Long id);
 
 	void deleteQuote(Long id);
 
 	QuoteResponseDto addQuote(QuoteRequestDto request);
 
 	QuoteResponseDto updateQuote(QuoteRequestDto request);
+
+    QuoteResponseDto getRandomQuote();
 }

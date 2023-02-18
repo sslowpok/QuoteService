@@ -32,4 +32,14 @@ public class QuoteController {
 		return quoteService.updateQuote(request);
 	}
 
+	@GetMapping("/random")
+	public QuoteResponseDto getRandomQuote() {
+		return quoteService.getRandomQuote();
+	}
+
+//	@GetMapping("/{id")
+//	public QuoteResponseDto getQuoteById(@PathVariable Long id) {
+//		return quoteService.getQuoteById(id);
+//	}
+
 }

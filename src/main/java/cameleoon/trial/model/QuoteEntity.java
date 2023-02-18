@@ -38,6 +38,8 @@ public class QuoteEntity {
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private UserEntity userEntity;
 
+	private Integer score;
+
 	// todo: add link to votes
 
 }

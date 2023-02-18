@@ -6,6 +6,8 @@ import cameleoon.trial.model.QuoteEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 @RequiredArgsConstructor
 public class QuoteDtoMapper {
@@ -14,6 +16,7 @@ public class QuoteDtoMapper {
 		return QuoteEntity.builder()
 				.id(request.getId())
 				.content(request.getContent())
+				.timestamp(LocalDateTime.now())
 				.build();
 	}
 

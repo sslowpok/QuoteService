@@ -12,9 +12,11 @@ import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +38,9 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	@Override
-	public QuoteEntity getQuoteById(Long id) {
-		return quoteRepository.findById(id)
-				.orElseThrow(() -> new QuoteNotFoundException(String.format("Quote with id %s not found", id)));
+	public QuoteResponseDto getQuoteById(Long id) {
+		return quoteDtoMapper.entityToResponse(quoteRepository.findById(id)
+				.orElseThrow(() -> new QuoteNotFoundException(String.format("Quote with id %s not found", id))));
 	}
 
 	@Override
@@ -47,12 +49,10 @@ public class QuoteServiceImpl implements QuoteService {
 	}
 
 	private QuoteEntity createQuote(QuoteRequestDto request) {
-		return QuoteEntity.builder()
-				.id(request.getId())
-				.content(request.getContent())
-				.userEntity(findUserById(request.getUserId()))
-				.timestamp(LocalDateTime.now())
-				.build();
+		QuoteEntity quoteEntity = quoteDtoMapper.requestToEntity(request);
+		quoteEntity.setId(null);
+		quoteEntity.setUserEntity(findUserById(request.getUserId()));
+		return quoteEntity;
 	}
 
 	private UserEntity findUserById(Long userid) {
@@ -68,6 +68,17 @@ public class QuoteServiceImpl implements QuoteService {
 		entity.setUserEntity(findUserById(request.getUserId()));
 		entity.setTimestamp(LocalDateTime.now());
 		return quoteDtoMapper.entityToResponse(quoteRepository.save(entity));
+	}
+
+	@Override
+	public QuoteResponseDto getRandomQuote() {
+		return quoteDtoMapper.entityToResponse(quoteRepository.findById(getRandomNumber(1L, quoteRepository.count()))
+				.orElseThrow(() -> new EntityNotFoundException("Quote repository is empty")));
+	}
+
+	public Long getRandomNumber(Long min, Long max) {
+		Random random = new Random();
+		return random.nextLong(max - min + 1) + min;
 	}
 
 	// todo: by id or content? parameter???
