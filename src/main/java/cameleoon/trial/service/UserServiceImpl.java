@@ -1,8 +1,10 @@
 package cameleoon.trial.service;
 
+import cameleoon.trial.api.dto.UserDetailsResponseDto;
 import cameleoon.trial.api.dto.UserRequestDto;
 import cameleoon.trial.api.dto.UserResponseDto;
 import cameleoon.trial.api.dto.mapper.UserDtoMapper;
+import cameleoon.trial.exception.UserNotFoundException;
 import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,4 +34,10 @@ public class UserServiceImpl implements UserService {
 		return userDtoMapper.requestToEntity(request);
 	}
 
+	public UserDetailsResponseDto getUserById(Long id) {
+		return userDtoMapper.entityToDetails(userRepository.findById(id)
+				.orElseThrow(() -> new UserNotFoundException(
+						String.format("User with id %s not found", id)
+				)));
+	}
 }

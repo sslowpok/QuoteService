@@ -105,7 +105,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public List<QuoteResponseDto> getLastQuotes() {
-		List<QuoteEntity> list = quoteRepository.findByOrderByScoreDesc().stream()
+		List<QuoteEntity> list = quoteRepository.findByOrderByScoreAsc().stream()
 				.limit(10).toList();
 		List<QuoteResponseDto> res = new ArrayList<>();
 		list.forEach(x -> res.add(quoteDtoMapper.entityToResponse(x)));

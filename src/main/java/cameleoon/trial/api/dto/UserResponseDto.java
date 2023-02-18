@@ -21,13 +21,7 @@ public class UserResponseDto {
 	@Schema(description = "User email", example = "tom@gmail.com")
 	private String email;
 
-	@Schema(description = "User password", example = "qwerty123456")
-	private String password;
-
 	@Schema(description = "Date of creation")
 	private LocalDateTime dateOfCreation;
-
-	@Schema(description = "User's quotes")
-	private List<QuoteEntity> quoteEntities;
 
 }

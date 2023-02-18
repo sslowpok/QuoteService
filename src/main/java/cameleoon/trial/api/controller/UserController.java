@@ -1,5 +1,6 @@
 package cameleoon.trial.api.controller;
 
+import cameleoon.trial.api.dto.UserDetailsResponseDto;
 import cameleoon.trial.api.dto.UserRequestDto;
 import cameleoon.trial.api.dto.UserResponseDto;
 import cameleoon.trial.model.UserEntity;
@@ -24,6 +25,11 @@ public class UserController {
 	@PostMapping
 	public UserResponseDto addUser(@RequestBody UserRequestDto userRequestDto) {
 		return userService.addUser(userRequestDto);
+	}
+
+	@GetMapping("/{id}")
+	public UserDetailsResponseDto getUserDetails(@PathVariable Long id) {
+		return userService.getUserById(id);
 	}
 
 }

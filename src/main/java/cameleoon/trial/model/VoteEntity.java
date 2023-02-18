@@ -35,6 +35,11 @@ public class VoteEntity {
     @JoinColumn(name = "quote_id", referencedColumnName = "id")
     private QuoteEntity quoteEntity;
 
+    @ManyToOne(optional = false)
+    @JsonBackReference
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;
+
     private LocalDateTime timestamp;
 
     private VoteCategory voteCategory;

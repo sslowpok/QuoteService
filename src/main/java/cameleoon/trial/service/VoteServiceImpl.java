@@ -1,12 +1,16 @@
 package cameleoon.trial.service;
 
+import cameleoon.trial.api.dto.VoteRequestDto;
 import cameleoon.trial.api.dto.VoteResponseDto;
 import cameleoon.trial.api.dto.mapper.VoteDtoMapper;
 import cameleoon.trial.enums.VoteCategory;
 import cameleoon.trial.exception.QuoteNotFoundException;
+import cameleoon.trial.exception.UserNotFoundException;
 import cameleoon.trial.model.QuoteEntity;
+import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.model.VoteEntity;
 import cameleoon.trial.repository.QuoteRepository;
+import cameleoon.trial.repository.UserRepository;
 import cameleoon.trial.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,11 +26,13 @@ public class VoteServiceImpl implements VoteService {
     private final VoteRepository voteRepository;
     private final QuoteRepository quoteRepository;
 
+    private final UserRepository userRepository;
+
     private final VoteDtoMapper voteDtoMapper;
 
     @Override
-    public VoteResponseDto addVote(Long quoteId, VoteCategory voteCategory) {
-        return voteDtoMapper.entityToResponse(voteRepository.save(createVote(quoteId, voteCategory)));
+    public VoteResponseDto addVote(VoteRequestDto request) {
+        return voteDtoMapper.entityToResponse(voteRepository.save(createVote(request)));
     }
 
     @Override
@@ -36,11 +42,15 @@ public class VoteServiceImpl implements VoteService {
         return votesList;
     }
 
-    private VoteEntity createVote(Long quoteId, VoteCategory voteCategory) {
-        QuoteEntity quoteEntity = getQuoteById(quoteId);
-        if (voteCategory.equals(VoteCategory.UPVOTE)) {
+    private VoteEntity createVote(VoteRequestDto request) {
+        UserEntity userEntity = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException(
+                        String.format("User with id %s not found", request.getUserId())
+                ));
+        QuoteEntity quoteEntity = getQuoteById(request.getQuoteId());
+        if (request.getVoteCategory().equals(VoteCategory.UPVOTE)) {
             quoteEntity.setScore(quoteEntity.getScore() + 1);
-        } else if (voteCategory.equals(VoteCategory.DOWNVOTE)) {
+        } else if (request.getVoteCategory().equals(VoteCategory.DOWNVOTE)) {
             if (quoteEntity.getScore() > 0) {
                 quoteEntity.setScore(quoteEntity.getScore() - 1);
             }
@@ -48,7 +58,8 @@ public class VoteServiceImpl implements VoteService {
         return VoteEntity.builder()
                 .quoteEntity(quoteEntity)
                 .timestamp(LocalDateTime.now())
-                .voteCategory(voteCategory)
+                .userEntity(userEntity)
+                .voteCategory(request.getVoteCategory())
                 .build();
     }
 

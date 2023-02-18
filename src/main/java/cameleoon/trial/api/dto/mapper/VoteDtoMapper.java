@@ -13,6 +13,7 @@ public class VoteDtoMapper {
         return VoteResponseDto.builder()
                 .id(voteEntity.getId())
                 .quoteId(voteEntity.getQuoteEntity().getId())
+                .userId(voteEntity.getUserEntity().getId())
                 .timestamp(voteEntity.getTimestamp())
                 .voteCategory(voteEntity.getVoteCategory())
                 .build();
