@@ -25,19 +25,11 @@ public class UserServiceImpl implements UserService {
 
 
 	public UserResponseDto addUser(UserRequestDto request) {
-
-		// todo: fix//
-//		userRepository.save(userEntity);
 		return userDtoMapper.entityToResponse(userRepository.save(createUser(request)));
 	}
 
 	private UserEntity createUser(UserRequestDto request) {
-		return UserEntity.builder()
-				.name(request.getName())
-				.email(request.getEmail())
-				.password(request.getPassword())
-				.dateOfCreation(LocalDateTime.now())
-				.build();
+		return userDtoMapper.requestToEntity(request);
 	}
 
 

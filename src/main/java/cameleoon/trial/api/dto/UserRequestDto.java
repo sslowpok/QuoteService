@@ -22,7 +22,4 @@ public class UserRequestDto {
 	@Schema(description = "User password", example = "qwerty123456")
 	private String password;
 
-	@Schema(description = "Date of creation")
-	private LocalDateTime dateOfCreation;
-
 }

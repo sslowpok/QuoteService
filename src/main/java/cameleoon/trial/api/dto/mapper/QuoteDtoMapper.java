@@ -26,6 +26,7 @@ public class QuoteDtoMapper {
 				.content(quoteEntity.getContent())
 				.userId(quoteEntity.getUserEntity().getId())
 				.timestamp(quoteEntity.getTimestamp())
+				.score(quoteEntity.getScore())
 				.build();
 	}
 

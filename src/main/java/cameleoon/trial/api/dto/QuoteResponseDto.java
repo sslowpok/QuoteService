@@ -22,4 +22,7 @@ public class QuoteResponseDto {
 	@Schema(description = "Quote author id (user")
 	private Long userId;
 
+	@Schema(description = "Quote score")
+	private Integer score;
+
 }

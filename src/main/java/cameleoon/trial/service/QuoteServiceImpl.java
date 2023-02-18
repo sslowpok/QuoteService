@@ -10,6 +10,7 @@ import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.repository.QuoteRepository;
 import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -52,6 +53,7 @@ public class QuoteServiceImpl implements QuoteService {
 		QuoteEntity quoteEntity = quoteDtoMapper.requestToEntity(request);
 		quoteEntity.setId(null);
 		quoteEntity.setUserEntity(findUserById(request.getUserId()));
+		quoteEntity.setScore(0);
 		return quoteEntity;
 	}
 
@@ -81,9 +83,13 @@ public class QuoteServiceImpl implements QuoteService {
 		return random.nextLong(max - min + 1) + min;
 	}
 
-	// todo: by id or content? parameter???
+	// todo: fix response entity
 	@Override
-	public void deleteQuote(Long id) {
-
+	public ResponseEntity<?> deleteQuote(Long id) {
+		if (!quoteRepository.existsById(id)) {
+			throw new QuoteNotFoundException(String.format("Quote with id %s not found", id));
+		}
+		quoteRepository.deleteById(id);
+		return ResponseEntity.ok("Quote deleted");
 	}
 }

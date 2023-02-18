@@ -1,10 +1,12 @@
 package cameleoon.trial.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -40,6 +42,9 @@ public class QuoteEntity {
 
 	private Integer score;
 
-	// todo: add link to votes
+	@Column
+	@JsonManagedReference
+	@OneToMany(orphanRemoval = true, mappedBy = "quoteEntity", fetch = FetchType.LAZY)
+	private List<VoteEntity> voteEntities;
 
 }

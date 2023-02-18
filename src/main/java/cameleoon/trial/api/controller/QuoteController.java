@@ -37,9 +37,14 @@ public class QuoteController {
 		return quoteService.getRandomQuote();
 	}
 
-//	@GetMapping("/{id")
-//	public QuoteResponseDto getQuoteById(@PathVariable Long id) {
-//		return quoteService.getQuoteById(id);
-//	}
+	@GetMapping("/{id}")
+	public QuoteResponseDto getQuoteById(@PathVariable Long id) {
+		return quoteService.getQuoteById(id);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteQuoteById(@PathVariable Long id) {
+		return quoteService.deleteQuote(id);
+	}
 
 }
