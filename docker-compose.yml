@@ -1,0 +1,9 @@
+version: '1'
+services:
+  app:
+    image: sslowpok/quote-service.jar
+    container_name: quote-service
+    build: .
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
