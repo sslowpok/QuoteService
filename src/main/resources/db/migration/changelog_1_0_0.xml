@@ -7,10 +7,6 @@
 
     <changeSet id="1" author="sslowpok">
         <sqlFile
-                path="1_0_0/CREATE_SCHEMA.sql"
-                relativeToChangelogFile="true"
-        />
-        <sqlFile
                 path="1_0_0/CREATE_TABLES.sql"
                 relativeToChangelogFile="true"
         />

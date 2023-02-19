@@ -22,11 +22,9 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.H2Dialect
-#        default_schema: kameleoon
-    show-sql: true
+    show-sql: false
   liquibase:
     enabled: true
-#    default-schema: ${spring.jpa.properties.hibernate.default_schema}
     change-log: classpath:db/changelog.xml
     user: sa
     password:
