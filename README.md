@@ -16,7 +16,6 @@
 - Liquibase
 - H2 in-memory database
 - Swagger UI: `http://localhost:8080/api/v1/kameleoon/swagger-ui/index.html`
-- H2 console: `localhost:8080/h2-console`
 
 ### Setup
 - `docker-compose up`
