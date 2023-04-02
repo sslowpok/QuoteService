@@ -8,8 +8,8 @@
 		<version>2.7.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>cameleoon</groupId>
-	<artifactId>trial</artifactId>
+	<groupId>quotes</groupId>
+	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>trial</name>
 	<description>Trial task for Kameleoon</description>

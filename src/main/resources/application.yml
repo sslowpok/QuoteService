@@ -1,11 +1,11 @@
 server:
   port: 8080
   url: http://localhost:${server.port}
-  basePrefixUrl: /api/v1/kameleoon
+  basePrefixUrl: /api/v1/app
 
 spring:
   application:
-    name: kameleoon
+    name: quote-service
   h2:
     console:
       enabled: true
