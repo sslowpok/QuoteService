@@ -8,12 +8,14 @@ import cameleoon.trial.exception.UserNotFoundException;
 import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -22,6 +24,7 @@ public class UserServiceImpl implements UserService {
 	private final UserDtoMapper userDtoMapper;
 
 	public List<UserResponseDto> getUsers() {
+		log.info("Get users request");
 		List<UserResponseDto> res = new ArrayList<>();
 		userRepository.findAll().forEach(x -> res.add(userDtoMapper.entityToResponse(x)));
 		return res;
@@ -29,6 +32,7 @@ public class UserServiceImpl implements UserService {
 
 
 	public UserResponseDto addUser(UserRequestDto request) {
+		log.info(String.format("Add user request: %s", request));
 		return userDtoMapper.entityToResponse(userRepository.save(createUser(request)));
 	}
 

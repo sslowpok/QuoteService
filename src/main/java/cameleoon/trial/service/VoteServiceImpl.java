@@ -13,12 +13,14 @@ import cameleoon.trial.repository.QuoteRepository;
 import cameleoon.trial.repository.UserRepository;
 import cameleoon.trial.repository.VoteRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class VoteServiceImpl implements VoteService {
@@ -32,11 +34,13 @@ public class VoteServiceImpl implements VoteService {
 
     @Override
     public VoteResponseDto addVote(VoteRequestDto request) {
+        log.info(String.format("Add vote request: %s", request));
         return voteDtoMapper.entityToResponse(voteRepository.save(createVote(request)));
     }
 
     @Override
     public List<VoteResponseDto> getVotes() {
+        log.info("Get votes request");
         List<VoteResponseDto> votesList = new ArrayList<>();
         voteRepository.findAll().forEach(x -> votesList.add(voteDtoMapper.entityToResponse(x)));
         return votesList;
@@ -64,6 +68,7 @@ public class VoteServiceImpl implements VoteService {
     }
 
     private QuoteEntity getQuoteById(Long quoteId) {
+        log.info(String.format("Get quote by id %d request", quoteId));
         return quoteRepository.findById(quoteId)
                 .orElseThrow(() -> new QuoteNotFoundException(String.format("Quote with id %s not found", quoteId)));
     }

@@ -11,6 +11,7 @@ import cameleoon.trial.model.UserEntity;
 import cameleoon.trial.repository.QuoteRepository;
 import cameleoon.trial.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class QuoteServiceImpl implements QuoteService {
@@ -32,6 +34,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public List<QuoteResponseDto> getQuotes() {
+		log.info("Get quotes request");
 		List<QuoteResponseDto> res = new ArrayList<>();
 		quoteRepository.findAll()
 				.forEach(x -> res.add(quoteDtoMapper.entityToResponse(x)));
@@ -40,12 +43,14 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public QuoteResponseDto getQuoteById(Long id) {
+		log.info(String.format("Get quote with id %d request", id));
 		return quoteDtoMapper.entityToResponse(quoteRepository.findById(id)
 				.orElseThrow(() -> new QuoteNotFoundException(String.format("Quote with id %s not found", id))));
 	}
 
 	@Override
 	public QuoteResponseDto addQuote(QuoteRequestDto request) {
+		log.info(String.format("Add quote request: %s", request));
 		return quoteDtoMapper.entityToResponse(quoteRepository.save(createQuote(request)));
 	}
 
@@ -66,6 +71,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public QuoteResponseDto updateQuote(QuoteRequestDto request) {
+		log.info(String.format("Update quote request: %s", request));
 		QuoteEntity entity = quoteDtoMapper.requestToEntity(request);
 		entity.setUserEntity(findUserById(request.getUserId()));
 		entity.setTimestamp(LocalDateTime.now());
@@ -74,6 +80,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public QuoteResponseDto getRandomQuote() {
+		log.info("Get random quote request");
 		return quoteDtoMapper.entityToResponse(quoteRepository.findById(getRandomNumber(1L, quoteRepository.count()))
 				.orElseThrow(() -> new EntityNotFoundException("Quote repository is empty")));
 	}
@@ -85,6 +92,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public StatusResponseDto deleteQuote(Long id) {
+		log.info(String.format("Delete quote request with id %d", id));
 		if (!quoteRepository.existsById(id)) {
 			throw new QuoteNotFoundException(String.format("Quote with id %s not found", id));
 		}
@@ -97,6 +105,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public List<QuoteResponseDto> getTopQuotes() {
+		log.info("Get top quotes request");
 		List<QuoteEntity> list = quoteRepository.findByOrderByScoreDesc().stream()
 				.limit(10).toList();
 		List<QuoteResponseDto> res = new ArrayList<>();
@@ -106,6 +115,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 	@Override
 	public List<QuoteResponseDto> getLastQuotes() {
+		log.info("Get last quotes request");
 		List<QuoteEntity> list = quoteRepository.findByOrderByScoreAsc().stream()
 				.limit(10).toList();
 		List<QuoteResponseDto> res = new ArrayList<>();
